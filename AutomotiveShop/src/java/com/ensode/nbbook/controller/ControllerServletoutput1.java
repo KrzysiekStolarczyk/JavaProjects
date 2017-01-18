@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ensode.nbbook.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,12 +12,34 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Kuczma
  */
-@WebServlet(name = "ControllerServlet", urlPatterns = {"/ControllerServlet"})
-public class ControllerServlet extends HttpServlet {
+@WebServlet(name = "ControllerServletoutput", urlPatterns = {"/ControllerServletoutput"})
+public class ControllerServletoutput1 extends HttpServlet {
+
+    ArrayList<String> lista = new ArrayList();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+//        Cart cart = new Cart();
+//        cart.setQuntityProducts(Integer.parseInt(request.getParameter("QuntityProductsCart")));
+//        request.setAttribute("cart", cart);
+        StoresAssortment allAssortment = new StoresAssortment();
+        allAssortment.setStoresAssortmentList();
+        request.setAttribute("assortment", allAssortment);
+//        String[] a = request.getParameterValues("idP");
+//         request.setAttribute("returnId", a);
+     
+         
+//  String[] productName = request.getParameterValues("productName");
+       // String h = a[0];
+      //  int test = Integer.parseInt(h);
+     //   lista.add(productName[test]);
+
+    //    System.out.println(a);
+
+        request.getRequestDispatcher("output.jsp").forward(request, response);
+
+        // getServletContext().setAttribute("surveyData", surveyData);
     }
 
     @Override
@@ -41,21 +59,7 @@ public class ControllerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        SurveyData surveyData = new SurveyData();
-        surveyData.setFullName(request.getParameter("fullName"));
-        surveyData.setProgLangList(request.getParameterValues("progLang"));
-        request.setAttribute("surveyData", surveyData);
-
-        StoresAssortment allAssortment = new StoresAssortment();
-        allAssortment.setStoresAssortmentList();
-        request.setAttribute("assortment", allAssortment);
-
-//        Cart cart = new Cart();
-//        cart.setQuntityProducts(Integer.parseInt(request.getParameter("QuntityProductsCart")));
-//        request.setAttribute("cart", cart);
-        request.getRequestDispatcher("output.jsp").forward(request, response);
-        //processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

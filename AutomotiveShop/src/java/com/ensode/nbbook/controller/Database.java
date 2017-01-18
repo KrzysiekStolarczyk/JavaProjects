@@ -24,19 +24,22 @@ public class Database {
         password = "12345678";
     }
 
-    public ArrayList<Assortment> ExecuteQuert(String query) throws SQLException {
-        ArrayList<Assortment> ListAssortment = new ArrayList<Assortment>();
+    public ArrayList<StoresAssortment> ExecuteQuert(String query) throws SQLException {
+        ArrayList<StoresAssortment> ListAssortment = new ArrayList<StoresAssortment>();
         try {
             Class.forName(DRIVER);
             connection = DriverManager.getConnection(URL, user, password);
             statement = connection.prepareStatement(query);
             resultset = statement.executeQuery();
             while (resultset.next()) {
-                Assortment test = new Assortment();
-                test.setCategoryId(resultset.getInt("CategoryId"));
-                test.setCategoryName(resultset.getString("CategoryName"));
-
-                ListAssortment.add(test);
+                StoresAssortment assort = new StoresAssortment();
+                assort.setId(resultset.getInt("Id"));
+                assort.setProductName(resultset.getString("ProductName"));
+                assort.setImagePath(resultset.getString("ImagePath"));
+                assort.setPrice(resultset.getFloat("Price"));
+                assort.setStock(resultset.getInt("Stock"));
+               
+                ListAssortment.add(assort);
             }
         } catch (Exception e) {
             e.printStackTrace();
