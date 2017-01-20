@@ -38,7 +38,7 @@ public class Database {
                 assort.setImagePath(resultset.getString("ImagePath"));
                 assort.setPrice(resultset.getFloat("Price"));
                 assort.setStock(resultset.getInt("Stock"));
-               
+
                 ListAssortment.add(assort);
             }
         } catch (Exception e) {
@@ -57,5 +57,31 @@ public class Database {
         return ListAssortment;
     }
 
-   
+    public int ExecuteQuertScalar(String query) throws SQLException {
+        int result = 0;
+        try {
+
+            Class.forName(DRIVER);
+            connection = DriverManager.getConnection(URL, user, password);
+            statement = connection.prepareStatement(query);
+            resultset = statement.executeQuery();
+            while (resultset.next()) {
+                result = resultset.getInt("Result");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (resultset != null) {
+                resultset.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
+
 }

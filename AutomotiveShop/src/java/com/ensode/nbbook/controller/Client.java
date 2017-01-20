@@ -33,17 +33,16 @@ public class Client {
         this.ClientSurname = ClientSurname;
     }
 
-    public  ArrayList<StoresAssortment> CheckPasswordClient(String login, String halo) {
-
-        ArrayList<StoresAssortment> ResultList = new ArrayList<StoresAssortment>();
+    public int CheckPasswordClient(String login, String halo) {
+        int ret = 0;
         Database database = new Database();
         try {
-            ResultList = database.ExecuteQuert("select COUNT(*) from  dbo.Client where [login]=\'" + login + "\' and Haslo=\'" + halo + "\'");
+            ret = database.ExecuteQuertScalar("select COUNT(*) as result from  dbo.Client where [login]=\'" + login + "\' and Haslo=\'" + halo + "\'");
 
         } catch (SQLException e) {
             System.out.println(e.toString());
             e.printStackTrace();
         }
-        return ResultList;
+        return ret;
     }
 }
