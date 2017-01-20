@@ -12,10 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Kuczma
- */
 @WebServlet(name = "ControllerServlet", urlPatterns = {"/ControllerServlet"})
 public class ControllerServlet extends HttpServlet {
 
@@ -30,42 +26,77 @@ public class ControllerServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        SurveyData surveyData = new SurveyData();
-        surveyData.setFullName(request.getParameter("fullName"));
-        surveyData.setProgLangList(request.getParameterValues("progLang"));
-        request.setAttribute("surveyData", surveyData);
-
         StoresAssortment allAssortment = new StoresAssortment();
-        allAssortment.setStoresAssortmentList();
-        request.setAttribute("assortment", allAssortment);
+        String fromRequest1 = request.getParameter("where");
+        String fromRequest2 = request.getParameter("filterN");
+        String fromRequest3 = request.getParameter("imageCart");
+        int action = 0;
 
-//        Cart cart = new Cart();
-//        cart.setQuntityProducts(Integer.parseInt(request.getParameter("QuntityProductsCart")));
-//        request.setAttribute("cart", cart);
-        request.getRequestDispatcher("output.jsp").forward(request, response);
-        //processRequest(request, response);
+        if (fromRequest1 != null || fromRequest3 != null) {
+            action = 1;
+        } else if (fromRequest2 != null) {
+            action = 2;
+        }
+
+        switch (action) {
+            case 1:// Start aplikacji i zaladowanie całego assortymentu
+                allAssortment.setStoresAssortmentList(allAssortment.getStoresAssortment());
+                request.setAttribute("assortment", allAssortment);
+                request.getRequestDispatcher("MainView.jsp").forward(request, response);
+                break;
+            case 2:// zaladowanie assortymentu z uwzglednieniem filtrow
+                String CenaOd = request.getParameter("cenaOd");
+                String CenaDo = request.getParameter("cenaDo");
+                String Kategoria = request.getParameter("category");
+                String SlowoSzukane = request.getParameter("slowo");
+                String CheckCena = request.getParameter("checkedCena");
+                String CheckKat = request.getParameter("checkedKat");
+                String CheckSlowo = request.getParameter("checkedSlowo");
+
+                int pozionm = 0;
+                String zap = "SELECT [id],[ProductName],[Price],[Stock],[ImagePath] FROM [JSP].[dbo].[VStoresAssortment]";
+                if ("on".equals(CheckCena)) {
+                    if ("".equals(CenaOd)) {
+                        CenaOd = "0";
+                    }
+                    if ("".equals(CenaDo)) {
+                        zap = zap + " Where [Price] > " + CenaOd;
+                    } else {
+                        zap = zap + " Where [Price] between " + CenaOd + " and " + CenaDo;
+                    }
+                    pozionm = 1;
+                }
+                if ("on".equals(CheckKat)) {
+                    if (pozionm == 1) {
+                        zap = zap + " and ";
+                    } else {
+                        zap = zap + " where ";
+                    }
+                    zap = zap + " CategoryName=\'" + Kategoria + "\'";
+                    pozionm = 2;
+                }
+                if ("on".equals(CheckSlowo)) {
+                    if (pozionm == 2 || pozionm == 1) {
+                        zap = zap + " and ";
+                    } else {
+                        zap = zap + "where";
+                    }
+
+                    zap = zap + " ProductName like \'%" + SlowoSzukane + "%\'";
+                }
+                allAssortment.setStoresAssortmentList(allAssortment.getStoresAssortmentAfterFilter(zap));
+                request.setAttribute("assortment", allAssortment);
+                request.getRequestDispatcher("MainView.jsp").forward(request, response);
+        }
+
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

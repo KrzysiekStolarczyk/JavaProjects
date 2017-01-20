@@ -62,8 +62,7 @@ public class StoresAssortment {
         ArrayList<StoresAssortment> ResultList = new ArrayList<StoresAssortment>();
         Database database = new Database();
         try {
-//            ResultList = database.ExecuteQuert("SELECT top 7 CategoryID, CategoryName FROM dbo.test");
-            ResultList = database.ExecuteQuert("SELECT [id],[ProductName],[Price],[Stock], [ImagePath] FROM [JSP].[dbo].[Assortment]");
+            ResultList = database.ExecuteQuert("SELECT [id],[ProductName],[Price],[Stock],[ImagePath] FROM [JSP].[dbo].[VStoresAssortment]");
 
         } catch (SQLException e) {
             System.out.println(e.toString());
@@ -71,13 +70,26 @@ public class StoresAssortment {
         }
         return ResultList;
     }
+     public ArrayList<StoresAssortment> getStoresAssortmentAfterFilter(String zapytanie) {
 
+        ArrayList<StoresAssortment> ResultList = new ArrayList<StoresAssortment>();
+        Database database = new Database();
+        try {
+            ResultList = database.ExecuteQuert(zapytanie);
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            e.printStackTrace();
+        }
+        return ResultList;
+    }
+    
     public ArrayList<StoresAssortment> getStoresAssortmentList() {
         return StoresAssortmentList;
     }
 
-    public void setStoresAssortmentList() {
-        this.StoresAssortmentList = getStoresAssortment();
+    public void setStoresAssortmentList( ArrayList<StoresAssortment> list ) {
+        this.StoresAssortmentList = list;
     }
 
 }

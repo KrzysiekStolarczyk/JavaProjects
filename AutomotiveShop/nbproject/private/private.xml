@@ -3,13 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/web/dodaj.jsp</file>
             <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/src/java/com/ensode/nbbook/controller/Cart.java</file>
+            <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/src/java/com/ensode/nbbook/controller/Database.java</file>
+            <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/src/java/com/ensode/nbbook/controller/StoresAssortment.java</file>
+            <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/web/MyCart.jsp</file>
             <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/src/java/com/ensode/nbbook/controller/ControllerServlet.java</file>
-            <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/web/resources/css/styles.css</file>
-            <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/web/output.jsp</file>
-            <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/src/java/com/ensode/nbbook/controller/ControllerServletoutput1.java</file>
+            <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/web/MainView.jsp</file>
+            <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/src/java/com/ensode/nbbook/controller/Filterss.java</file>
             <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/web/index.jsp</file>
+            <file>file:/C:/Users/Kuczma/Documents/NetBeansProjects/AutomotiveShop/src/java/com/ensode/nbbook/controller/Client.java</file>
         </group>
     </open-files>
 </project-private>

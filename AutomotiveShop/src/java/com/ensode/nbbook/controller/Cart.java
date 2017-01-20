@@ -1,5 +1,6 @@
 package com.ensode.nbbook.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Cart {
@@ -69,6 +70,31 @@ public class Cart {
             CartList = new ArrayList<>();
         }
         this.CartList.add(cartList);
+    }
+
+    public void submitOrder() {
+        String SqlQuery = "";
+        for (Cart item : getCartList()) {
+            SqlQuery = SqlQuery + "UPDATE [JSP].[dbo].[Assortment] SET stock=stock-" + item.getQuntityProducts() + " WHERE id =" + item.getIdProduct() + "\n; ";
+        }
+        Database database = new Database();
+        try {
+            database.ExecuteQuert(SqlQuery);
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            e.printStackTrace();
+        }
+        getCartList().clear();
+    }
+
+    public void removeItemFromList(int id) {
+
+        for (Cart item : getCartList()) {
+            if (item.getIdProduct() == id) {
+                getCartList().remove(item);
+                break;
+            }
+        }
     }
 
     void setAttribute(String cart, Cart cart0) {
